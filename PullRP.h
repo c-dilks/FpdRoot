@@ -1,0 +1,96 @@
+#ifndef PullRP_
+#define PullRP_
+#include "Qt.h"
+#include "TArray.h"
+#include "TMath.h"
+
+class QTRPInfo : public TObject
+{
+  public:
+    QTRPInfo(){};
+
+    /*
+    Char_t QTN;
+    Char_t QTRPInd[16];
+    Short_t QTRPTAC[16];
+    Short_t QTRPADC[16];
+    */
+
+    Short_t NE,NW;
+    Short_t RPE_Idx[16];
+    Short_t RPE_TAC[16];
+    Short_t RPE_ADC[16];
+    Short_t RPW_Idx[16];
+    Short_t RPW_TAC[16];
+    Short_t RPW_ADC[16];
+    Float_t vertex;
+
+    void Print()
+    {
+      printf("NE=%d NW=%d vertex=%f\n",NE,NW,vertex);
+      for(int j=0; j<16; j++) 
+      {
+        printf(" RPE_Idx=%d RPE_ADC=%d RPE_TAC=%d\n",RPE_Idx[j],RPE_ADC[j],RPE_TAC[j]);
+        printf(" RPW_Idx=%d RPW_ADC=%d RPW_TAC=%d\n",RPW_Idx[j],RPW_ADC[j],RPW_TAC[j]);
+      };
+    };
+    void SetZero()
+    {
+      NE=NW=0;
+      vertex=0;
+      for(int j=0; j<16; j++) 
+      {
+        RPE_Idx[j]=0;
+        RPE_ADC[j]=0;
+        RPE_TAC[j]=0;
+        RPW_Idx[j]=0;
+        RPW_ADC[j]=0;
+        RPW_TAC[j]=0;
+      };
+    };
+  private:
+    ClassDef(QTRPInfo,1);
+};
+
+class PullRP : public TObject
+{
+  public:
+    PullRP();
+    void GetADCTAC(Qt* pQt);
+
+    int bADC[16];//ADC...[RP idx]
+    int bTAC[16];//TAC...[RP idx]
+    int bADCT[16];//ADC...[RP idx]  (QT time of bADC)
+    Qt* PQt;
+    int RPslots[17];
+    int bTACchan[6][4][2][4];
+    int bADCchan[6][4][2][4];
+    Float_t GetVertex();
+    Float_t GetVertex(Qt* pQt)
+    {
+      GetADCTAC(pQt);
+      return GetVertex();
+    }
+    TArrayI sE;
+    TArrayI sW;
+    TArrayI SortByTime(int iew);
+    void PrintSorted();
+    Float_t ADCmin[16];
+    Float_t MaxtacW;
+    Float_t MaxtacE;
+    Int_t iwmax;
+    Int_t iemax;
+    Float_t scale;//conversion from delta t to distance
+    Float_t vtx;
+    Float_t TACcalib[16];  
+    Int_t VtxRange[2];
+    Int_t NAboveAdcmin[2];//number for E/W
+    Float_t SumADCinTRange(int iew,float dt1=200,float t2=-10000.);// t1=t2+-dt1 and if t2=-1000 t2 is max time
+    void UpdateQTRPinfo(QTRPInfo* qtrp,Qt* pqt);
+    void IdxToEiun(Int_t idx0, Int_t &ew0, Int_t &io0, Int_t &ud0, Int_t &ns0);
+    Int_t EiunToIdx(Int_t ew0, Int_t io0, Int_t ud0, Int_t ns0);
+  private:
+    ClassDef(PullRP,1);
+
+};
+#endif
