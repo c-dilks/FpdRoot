@@ -13,23 +13,25 @@ namespace
 
 PullRP::PullRP()
 {
-  // ADC thresholds (first minimum after noise / pedestal peak)
-  ADCmin[0] = 110;
-  ADCmin[1] = 110;
-  ADCmin[2] = 110;
-  ADCmin[3] = 90;
-  ADCmin[4] = 120;
-  ADCmin[5] = 90;
-  ADCmin[6] = 110;
-  ADCmin[7] = 110;
-  ADCmin[8] = 120;
-  ADCmin[9] = 115;
-  ADCmin[10] = 120;
-  ADCmin[11] = 120;
-  ADCmin[12] = 130;
-  ADCmin[13] = 90;
-  ADCmin[14] = 125;
-  ADCmin[15] = 100;
+  // ADC thresholds
+  ADCmin[0] = 97; // first minimum @ 111
+  ADCmin[1] = 100; // first minimum @ 110
+  ADCmin[2] = 100; // first minimum @ 113
+  ADCmin[3] = 84; // first minimum @ ~90
+  ADCmin[4] = 103; // first minimum @ 120
+  ADCmin[5] = 83; // first minimum @ 90
+  ADCmin[6] = 97; // first minimum @ 111
+  ADCmin[7] = 97; // first minimum @ 116
+  ADCmin[8] = 100; // first minimum @ 127 
+  ADCmin[9] = 98; // first minimum @ 117
+  ADCmin[10] = 102; // first minimum @ 124
+  ADCmin[11] = 103; // first minimum @ 122
+  ADCmin[12] = 131; // first minimum @ 175
+  ADCmin[13] = 83; // first minimum @ 87
+  ADCmin[14] = 110; // first minimum @ 130
+  ADCmin[15] = 91; // first minimum @ ~102
+
+
 
   //calibration -- shift TAC peaks to ~1000 counts
   TACcalib[0]  = 553;
