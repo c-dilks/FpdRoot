@@ -106,10 +106,11 @@ class AnalTools : public TObject
 
     Int_t Examp_script4();
     Int_t Select_script1(Int_t set=80);
-    Int_t Select_scriptQT1(Int_t set=80,FilesSet* P_Files=0,char* hntName="h111_08");
-    Int_t Select_Trig(char* infile="./run*.root",Int_t set=80,FilesSet* P_Files=0,char* hntName="h111_08");
-    Int_t Select_ADC_QT(Int_t set=80,FilesSet* P_Files=0,char* hntName="h111_08");
-    Int_t Select_ADC_QT2(Int_t set=80,FilesSet* P_Files=0,char* hntName="h111_08");
+    Int_t Select_scriptQT1(Int_t set=80,FilesSet* P_Files=0,char* hntName=(char*)"h111_08");
+    Int_t Select_script_RPtest(Int_t set=80,FilesSet* P_Files=0,char* hntName=(char*)"h111_08");
+    Int_t Select_Trig(char* infile=(char*)"./run*.root",Int_t set=80,FilesSet* P_Files=0,char* hntName=(char*)"h111_08");
+    Int_t Select_ADC_QT(Int_t set=80,FilesSet* P_Files=0,char* hntName=(char*)"h111_08");
+    Int_t Select_ADC_QT2(Int_t set=80,FilesSet* P_Files=0,char* hntName=(char*)"h111_08");
     Int_t NumberEventsToProcess;
     Int_t FirstEventToProcess;
     Bool_t OutputToSingle;
@@ -127,9 +128,9 @@ class AnalTools : public TObject
     Bool_t SetFitOption(Int_t iopt=0);
     Int_t GetFitOption();
     Bool_t WriteADC;
-    TH2F* Mat2NewHist2(TMatrixT<float>* tm,char* hname="temph");
+    TH2F* Mat2NewHist2(TMatrixT<float>* tm,char* hname=(char*)"temph");
     TMatrixT<float> MultMat(TMatrixT<float>* tm1,TMatrixT<float>* tm2);
-    void chkEta(char* filelist="tmp.txt",float eta0=-3.65,float dcenter=.15,
+    void chkEta(char* filelist=(char*)"tmp.txt",float eta0=-3.65,float dcenter=.15,
 		float e0=85.,float de=5.,float m0=.55,float dm=.08);
     void TrimFMS(CalibStr* FF);
     void SetCorrLimitFMS(CalibStr* fpdc,Float_t max=35.,Float_t min=0.);
@@ -177,11 +178,13 @@ class AnalTools : public TObject
     bool TestCellTree(Cell*);
     UInt_t L2sum[2];
     UInt_t lastdsm[8];
+    UInt_t Fpde[8];
     float Eminpout[4];
     PullBBC*  pbbc;
     PullRP*  prp;
     QTBBCInfo qtbinfo;
     QTRPInfo qtrpinfo;
+
 
  private:
     ClassDef(AnalTools,5); 

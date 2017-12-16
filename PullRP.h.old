@@ -53,11 +53,11 @@ class PullRP : public TObject
 
     int bADC[16];//ADC...[RP idx]
     int bTAC[16];//TAC...[RP idx]
-    int bTACsynced[16];//TAC...[RP idx]
     int bADCT[16];//ADC...[RP idx]  (QT time of bADC)
     Qt* PQt;
-    int bTACchan[4][2][4]; // [QT card] [0=first 4 channels / 1=last 4 channels] [channel in halfcard]
-    int bADCchan[4][2][4]; // [QT card] [0=first 4 channels / 1=last 4 channels] [channel in halfcard]
+    int RPslots[17];
+    int bTACchan[6][4][2][4];
+    int bADCchan[6][4][2][4];
     Float_t GetVertex();
     Float_t GetVertex(Qt* pQt)
     {
@@ -67,7 +67,8 @@ class PullRP : public TObject
     TArrayI sE;
     TArrayI sW;
     TArrayI SortByTime(int iew);
-    Int_t  ADCmin[16];
+    void PrintSorted();
+    Float_t ADCmin[16];
     Float_t MaxtacW;
     Float_t MaxtacE;
     Int_t iwmax;
@@ -75,17 +76,13 @@ class PullRP : public TObject
     Float_t scale;//conversion from delta t to distance
     Float_t vtx;
     Float_t TACcalib[16];  
+    Int_t VtxRange[2];
     Int_t NAboveAdcmin[2];//number for E/W
+    Float_t SumADCinTRange(int iew,float dt1=200,float t2=-10000.);// t1=t2+-dt1 and if t2=-1000 t2 is max time
     void UpdateQTRPinfo(QTRPInfo* qtrp,Qt* pqt);
     void IdxToEiun(Int_t idx0, Int_t &ew0, Int_t &io0, Int_t &ud0, Int_t &ns0);
     Int_t EiunToIdx(Int_t ew0, Int_t io0, Int_t ud0, Int_t ns0);
-    Int_t iEW(Int_t idx0) { return (Int_t)((idx0>>3)&0x1); };
-    Int_t iIO(Int_t idx0) { return (Int_t)((idx0>>2)&0x1); };
-    Int_t iUD(Int_t idx0) { return (Int_t)((idx0>>1)&0x1); };
-    Int_t iNS(Int_t idx0) { return (Int_t)((idx0>>0)&0x1); };
   private:
-    Int_t qtchan,qtcard,qthalfcard,qtchan4;
-    Int_t qadc,qtac,val,tval;
     ClassDef(PullRP,1);
 
 };

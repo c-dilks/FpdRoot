@@ -29,8 +29,8 @@ class CellTDep : public TObject
   TGraphErrors* GetGraph(){return gr;};
   Int_t ErrorStatus;//zero for a good fit
   Float_t GetNominalLedADC(){return NominalLedADC;};
-  //  Float_t SetNominalLedADC(Int_t nom){NominalLedADC=nom;};
-  Float_t SetNominalLedADC(Float_t nom){NominalLedADC=nom;};
+  //  void SetNominalLedADC(Int_t nom){NominalLedADC=nom;};
+  void SetNominalLedADC(Float_t nom){NominalLedADC=nom;};
   Float_t GetNominalGcor(){return NominalGcor;};
   Float_t GetthisLedADC(){return thisLedADC;};
 

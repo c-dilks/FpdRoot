@@ -17,6 +17,7 @@
 #include "PullBBC.h"
 #include "PullRP.h"
 
+const int n_tracks_max = 1000;
 
 
 class poutTree : public TObject
@@ -58,6 +59,7 @@ class poutTree : public TObject
   Int_t Bunchid7bit;
   UInt_t L2sum[2];
   UInt_t lastdsm[8];
+  UInt_t Fpde[8];
   Float_t adc[98];
   //Define a Tree
   TChain* p_out;
@@ -113,6 +115,43 @@ class poutTree : public TObject
   void DrawFMSADC(Int_t iew, Int_t instb,Geom*);
   QTBBCInfo qtbbc;
   QTRPInfo qtrp;
+
+
+  // OFile tree RP branches
+  Int_t RP_n_tracks,RP_n_trackpoints;
+  // track variables -- prefixed with t_
+  Int_t RP_t_index[n_tracks_max];
+  Int_t RP_t_branch[n_tracks_max];
+  Int_t RP_t_type[n_tracks_max];
+  UInt_t RP_t_planesUsed[n_tracks_max];
+  Double_t RP_t_p[n_tracks_max];
+  Double_t RP_t_pt[n_tracks_max];
+  Double_t RP_t_eta[n_tracks_max];
+  Double_t RP_t_time[n_tracks_max];
+  Double_t RP_t_theta[n_tracks_max][3]; // [angle (X,Y,full)]
+  Double_t RP_t_thetaRP[n_tracks_max][3]; // [angle (X,Y,full)]
+  Double_t RP_t_phi[n_tracks_max];
+  Double_t RP_t_phiRP[n_tracks_max];
+  Double_t RP_t_t[n_tracks_max];
+  Double_t RP_t_xi[n_tracks_max];
+  Bool_t RP_t_gold[n_tracks_max];
+  Bool_t RP_t_isBad[n_tracks_max];
+  Double_t RP_t_qualHash[n_tracks_max];
+  // trackpoint variables -- prefixed with p0_ and p1_
+  Bool_t RP_p_tpExists[2][n_tracks_max];
+  Int_t RP_p_RPid[2][n_tracks_max];
+  Int_t RP_p_clustid_s1[2][n_tracks_max]; 
+  Int_t RP_p_clustid_s2[2][n_tracks_max]; 
+  Int_t RP_p_clustid_s3[2][n_tracks_max]; 
+  Int_t RP_p_clustid_s4[2][n_tracks_max]; 
+  Int_t RP_p_quality[2][n_tracks_max];
+  UInt_t RP_p_planesUsed[2][n_tracks_max];
+  Double_t RP_p_x[2][n_tracks_max];
+  Double_t RP_p_y[2][n_tracks_max];
+  Double_t RP_p_z[2][n_tracks_max];
+  Double_t RP_p_time_pmt1[2][n_tracks_max];
+  Double_t RP_p_time_pmt2[2][n_tracks_max];
+
  private:
   TGraph* gr[4];
   TH2F* gradc[4];

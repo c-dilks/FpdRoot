@@ -52,7 +52,7 @@ class HitCluster : public TObject {
   TObjArray *    tow    ;               //!  TowerFPD objects that make the cluster
   void CalClusterMoment(Float_t Ecoff);
   Bool_t UpdateEnergy();
-  Bool_t UpdateEnergy(Float_t Ecoff){Ecutoff=Ecoff;UpdateEnergy();};
+  Bool_t UpdateEnergy(Float_t Ecoff){Ecutoff=Ecoff;return UpdateEnergy();};
   //ShadowPointers point to clusters owned by Yiqun in ShadowClusters
   //ShodowPointers are not copied and links are removed by Clear
   //Actual ShadowClusters are only created and deleted in Yiqun

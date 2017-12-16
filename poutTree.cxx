@@ -1,5 +1,7 @@
 #include "poutTree.h"
 ClassImp(poutTree)
+
+
 poutTree::poutTree(char* filelist)
 {
   for(int k=0;k<4;k++)
@@ -61,6 +63,8 @@ poutTree::poutTree(char* filelist)
     };
 
   p_out->SetBranchAddress("spin",&spin);
+
+  // FMS sector
   p_out->SetBranchAddress("nphotons",&nphotons);
   p_out->SetBranchAddress("br_nwrds",&nwrds);
   p_out->SetBranchAddress("br_types",tpes);
@@ -73,6 +77,65 @@ poutTree::poutTree(char* filelist)
   p_out->SetBranchAddress("br_ievt",&ievt);
   p_out->SetBranchAddress("br_L2sum",L2sum);
   p_out->SetBranchAddress("br_lastdsm",lastdsm);
+  //p_out->SetBranchAddress("br_Fpde",Fpde);
+
+
+  // RP sector
+  p_out->SetBranchAddress("RP_n_tracks",&RP_n_tracks);
+  p_out->SetBranchAddress("RP_n_trackpoints",&RP_n_trackpoints);
+  // tracks
+  p_out->SetBranchAddress("RP_t_index",RP_t_index);
+  p_out->SetBranchAddress("RP_t_branch",RP_t_branch);
+  p_out->SetBranchAddress("RP_t_type",RP_t_type);
+  /* 0=rpsLocal -- 1 track point
+   * 1=rpsGlobal -- 2 track points
+   * 2=rpsUndefined -- track not defined
+   */
+  p_out->SetBranchAddress("RP_t_planesUsed",RP_t_planesUsed);
+  p_out->SetBranchAddress("RP_t_p",RP_t_p);
+  p_out->SetBranchAddress("RP_t_pt",RP_t_pt);
+  p_out->SetBranchAddress("RP_t_eta",RP_t_eta);
+  p_out->SetBranchAddress("RP_t_time",RP_t_time);
+  p_out->SetBranchAddress("RP_t_theta",RP_t_theta);
+  p_out->SetBranchAddress("RP_t_thetaRP",RP_t_thetaRP);
+  p_out->SetBranchAddress("RP_t_phi",RP_t_phi);
+  p_out->SetBranchAddress("RP_t_phiRP",RP_t_phiRP);
+  p_out->SetBranchAddress("RP_t_t",RP_t_t);
+  p_out->SetBranchAddress("RP_t_xi",RP_t_xi);
+  p_out->SetBranchAddress("RP_t_gold",RP_t_gold);
+  p_out->SetBranchAddress("RP_t_isBad",RP_t_isBad); 
+  p_out->SetBranchAddress("RP_t_qualHash",RP_t_qualHash); 
+  // track point 0
+  p_out->SetBranchAddress("RP_p0_tpExists",RP_p_tpExists[0]);
+  p_out->SetBranchAddress("RP_p0_RPid",RP_p_RPid[0]);
+  /* 0=E1U  1=E1D  2=E2U  3=E2D
+   * 4=W1U  5=W1D  6=W2U  7=W2D
+   */
+  p_out->SetBranchAddress("RP_p0_clustid_s1",RP_p_clustid_s1[0]);
+  p_out->SetBranchAddress("RP_p0_clustid_s2",RP_p_clustid_s2[0]);
+  p_out->SetBranchAddress("RP_p0_clustid_s3",RP_p_clustid_s3[0]);
+  p_out->SetBranchAddress("RP_p0_clustid_s4",RP_p_clustid_s4[0]);
+  p_out->SetBranchAddress("RP_p0_quality",RP_p_quality[0]);
+  /* 0=rpsNormal -- not golden and not undefined
+   * 1=rpsGolden -- single cluster in all 4 SSD planes
+   * 2=rpsNotSet -- undefined track point
+   */
+  p_out->SetBranchAddress("RP_p0_planesUsed",RP_p_planesUsed[0]);
+  p_out->SetBranchAddress("RP_p0_x",RP_p_x[0]);
+  p_out->SetBranchAddress("RP_p0_y",RP_p_y[0]);
+  p_out->SetBranchAddress("RP_p0_z",RP_p_z[0]);
+  // track point 1
+  p_out->SetBranchAddress("RP_p1_tpExists",RP_p_tpExists[1]);
+  p_out->SetBranchAddress("RP_p1_RPid",RP_p_RPid[1]);
+  p_out->SetBranchAddress("RP_p1_clustid_s1",RP_p_clustid_s1[1]);
+  p_out->SetBranchAddress("RP_p1_clustid_s2",RP_p_clustid_s2[1]);
+  p_out->SetBranchAddress("RP_p1_clustid_s3",RP_p_clustid_s3[1]);
+  p_out->SetBranchAddress("RP_p1_clustid_s4",RP_p_clustid_s4[1]);
+  p_out->SetBranchAddress("RP_p1_quality",RP_p_quality[1]);
+  p_out->SetBranchAddress("RP_p1_planesUsed",RP_p_planesUsed[1]);
+  p_out->SetBranchAddress("RP_p1_x",RP_p_x[1]);
+  p_out->SetBranchAddress("RP_p1_y",RP_p_y[1]);
+  p_out->SetBranchAddress("RP_p1_z",RP_p_z[1]);
   
 
   TBranch        *b_BQTNE;   //!
@@ -96,6 +159,7 @@ poutTree::poutTree(char* filelist)
   TBranch        *b_RPvertex;   //!
   
 
+  /*
   p_out->SetBranchAddress("br_QTNE",&(qtbbc.QTNE),&b_BQTNE);
   p_out->SetBranchAddress("br_QTNW",&(qtbbc.QTNW),&b_BQTNW);
   if(p_out->GetBranch("br_QTEBBCInd"))p_out->SetBranchAddress("br_QTEBBCInd",qtbbc.QTEBBCInd);
@@ -116,6 +180,7 @@ poutTree::poutTree(char* filelist)
   if(p_out->GetBranch("br_RPE_TAC"))p_out->SetBranchAddress("br_RPE_TAC",qtrp.RPE_TAC);
   if(p_out->GetBranch("br_RPW_TAC"))p_out->SetBranchAddress("br_RPW_TAC",qtrp.RPW_TAC);
   if(p_out->GetBranch("br_RPvertex"))p_out->SetBranchAddress("br_RPvertex",&(qtrp.vertex));
+  */
   
 
   if(p_out->GetBranch("br_adc"))p_out->SetBranchAddress("br_adc",&adc);

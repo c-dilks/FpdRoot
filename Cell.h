@@ -200,7 +200,7 @@ class Cell : public TObject
   Float_t Chi2_Det;
   Float_t Slope_Det;
   Float_t Det_Peak_Loc;
-  TGraphErrors* FitMvsE(TH2F* hme,Int_t ndiv=5, char* opt="LQ0",Int_t nstart=1,Int_t nend=10000,TH1D* slicearray=0);
+  TGraphErrors* FitMvsE(TH2F* hme,Int_t ndiv=5, char* opt=(char*)"LQ0",Int_t nstart=1,Int_t nend=10000,TH1D* slicearray=0);
   //  TGraphErrors* p_gFME;
   void DrawFMSADC(Int_t NSTB,Bool_t UseEnergy=false);
   TMatrixT<float> FillFMSADC(Int_t NSTB);
